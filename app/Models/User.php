@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\CommentWritten;
+use App\Events\LessonWatched;
 use App\Models\Comment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -73,5 +75,29 @@ class User extends Authenticatable
     public function badges()
     {
         return $this->belongsToMany(Badge::class)->withTimeStamps();
+    }
+
+    /**
+     * this methods for testing purposes
+     * delete them before deploy to production.
+     */
+
+    public function completeLessons($size)
+    {
+        for ($i = 1; $i <= $size; $i++) {
+            $lesson = Lesson::findOrFail($i);
+            $this->lessons()->attach($lesson->id, [
+                'watched' => 1,
+            ]);
+            LessonWatched::dispatch($lesson, $this);
+        }
+    }
+
+    public function addComments($size)
+    {
+        for ($i = 1; $i <= $size; $i++) {
+            $comment = Comment::factory()->create(['user_id' => $this->id]);
+            CommentWritten::dispatch($comment);
+        }
     }
 }

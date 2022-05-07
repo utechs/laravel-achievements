@@ -28,7 +28,22 @@ class AchievementsToAward
      */
     public function handleLessonWatched($event)
     {
-        $event;
+        $userAchievements = $event->user
+            ->achievements()
+            ->where('type', 'lesson')
+            ->pluck('achievement_id');
+
+        $achievements = Achievement::where('type', 'lesson')
+            ->whereNotIn('id', $userAchievements)
+            ->get();
+        $toUnlock = $achievements
+            ->filter(function ($achievement) use ($event) {
+                return $event->user->watched()->count() >= $achievement->points;
+            })
+            ->map->getKey();
+        if (count($toUnlock) > 0) {
+            $event->user->unlockAchievements($toUnlock);
+        }
     }
     /**
      * Handle the event.
@@ -38,7 +53,23 @@ class AchievementsToAward
      */
     public function handleCommentWritten($event)
     {
-        //
+        $userAchievements = $event->comment->user
+            ->achievements()
+            ->where('type', 'comment')
+            ->pluck('achievement_id');
+
+        $achievements = Achievement::where('type', 'comment')
+            ->whereNotIn('id', $userAchievements)
+            ->get();
+        $toUnlock = $achievements
+            ->filter(function ($achievement) use ($event) {
+                return $event->comment->user->comments()->count() >=
+                    $achievement->points;
+            })
+            ->map->getKey();
+        if (count($toUnlock) > 0) {
+            $event->comment->user->unlockAchievements($toUnlock);
+        }
     }
 
     /**

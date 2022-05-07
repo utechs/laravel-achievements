@@ -2,9 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Events\BadgeUnlocked;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Events\AchievementUnlocked;
+use App\Models\Badge;
 
 class BadgesToAward
 {
@@ -21,11 +20,21 @@ class BadgesToAward
     /**
      * Handle the event.
      *
-     * @param  \App\Events\BadgeUnlocked  $event
+     * @param  \App\Events\AchievementUnlocked  $event
      * @return void
      */
-    public function handle(BadgeUnlocked $event)
+    public function handle(AchievementUnlocked $event)
     {
-        //
+        $userBadges = $event->user->badges()->pluck('badge_id');
+        $badges = Badge::whereNotIn('id', $userBadges)->get();
+        $toUnlock = $badges
+            ->filter(function ($badge) use ($event) {
+                return $event->user->achievements()->count() >= $badge->points;
+            })
+            ->map->getKey();
+
+        if (count($toUnlock) > 0) {
+            $event->user->unlockBadges($toUnlock);
+        }
     }
 }
