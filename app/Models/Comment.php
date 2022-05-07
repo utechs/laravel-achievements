@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -15,10 +14,7 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'body',
-        'user_id'
-    ];
+    protected $fillable = ['body', 'user_id'];
 
     /**
      * Get the user that wrote the comment.
