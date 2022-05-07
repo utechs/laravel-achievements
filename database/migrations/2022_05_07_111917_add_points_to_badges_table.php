@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPointsToAchievementTable extends Migration
+class AddPointsToBadgesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddPointsToAchievementTable extends Migration
      */
     public function up()
     {
-        Schema::table('achievement', function (Blueprint $table) {
+        Schema::table('badges', function (Blueprint $table) {
             $table->unsignedBigInteger('points')->after('description');
         });
     }
@@ -25,7 +25,7 @@ class AddPointsToAchievementTable extends Migration
      */
     public function down()
     {
-        Schema::table('achievement', function (Blueprint $table) {
+        Schema::table('badges', function (Blueprint $table) {
             Schema::dropColumn('points');
         });
     }
