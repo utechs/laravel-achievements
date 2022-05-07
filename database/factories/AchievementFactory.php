@@ -29,13 +29,14 @@ class AchievementFactory extends Factory
                 '20 Comment Written',
             ]);
         $words = explode(' ', trim($name));
+
         $points = $words[0] == 'First' ? 1 : (int) $words[0];
         $type = Str::lower($words[1]);
         return [
             'name' => $name,
             'description' => $this->faker->paragraph(),
             'points' => $points,
-            'type' => $type,
+            'type' => Str::singular($type),
         ];
     }
 }
