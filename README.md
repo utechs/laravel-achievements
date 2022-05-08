@@ -6,6 +6,8 @@
 I added 2 methods in User Model to run my testing.
 
 ```
+
+//$size number of lessons to be generated
 public function completeLessons($size)
 {
     for ($i = 1; $i <= $size; $i++) {
@@ -18,6 +20,7 @@ public function completeLessons($size)
 }
 ```
 ```
+//$size number of comments to be generated
 public function addComments($size)
 {
     for ($i = 1; $i <= $size; $i++) {
