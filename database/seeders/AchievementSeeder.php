@@ -15,7 +15,7 @@ class AchievementSeeder extends Seeder
     public function run()
     {
         $achievements = Achievement::factory()
-            ->count(20)
+            ->count(10)
             ->create();
     }
 }

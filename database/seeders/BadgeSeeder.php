@@ -15,7 +15,7 @@ class BadgeSeeder extends Seeder
     public function run()
     {
         $badges = Badge::factory()
-            ->count(20)
+            ->count(4)
             ->create();
     }
 }
