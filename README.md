@@ -7,10 +7,10 @@ I added 2 methods in User Model to run my testing.
 
 ```
 
-//$size number of lessons to be generated
-public function completeLessons($size)
+//$count number of lessons to be generated
+public function completeLessons($count)
 {
-    for ($i = 1; $i <= $size; $i++) {
+    for ($i = 1; $i <= $count; $i++) {
         $lesson = Lesson::findOrFail($i);
         $this->lessons()->attach($lesson->id, [
             'watched' => 1,
@@ -20,10 +20,10 @@ public function completeLessons($size)
 }
 ```
 ```
-//$size number of comments to be generated
-public function addComments($size)
+//$count number of comments to be generated
+public function addComments($count)
 {
-    for ($i = 1; $i <= $size; $i++) {
+    for ($i = 1; $i <= $count; $i++) {
         $comment = Comment::factory()->create(['user_id' => $this->id]);
         CommentWritten::dispatch($comment);
     }
