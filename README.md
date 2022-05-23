@@ -1,5 +1,8 @@
 # Achievements
  Achievements system for Course portal
+ Download package
+ - Run composer install
+ - php artisan test
 # Adding new Achievement and Badge
  I decided to use http requests to store new achievement and badge, but it can be done by using Artisan command with stub class.
 # Testing purposes
