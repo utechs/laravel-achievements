@@ -16,10 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $lessons = Lesson::factory()
-            ->count(20)
-            ->create();
-        $users = User::factory()
-            ->count(20)
+            ->count(100)
             ->create();
     }
 }

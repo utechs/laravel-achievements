@@ -82,7 +82,7 @@ class User extends Authenticatable
      * delete them before deploy to production.
      */
 
-    public function completeLessons($size)
+    public function completeLessons($count)
     {
         for ($i = 1; $i <= $size; $i++) {
             $lesson = Lesson::findOrFail($i);
@@ -93,7 +93,7 @@ class User extends Authenticatable
         }
     }
 
-    public function addComments($size)
+    public function addComments($count)
     {
         for ($i = 1; $i <= $size; $i++) {
             $comment = Comment::factory()->create(['user_id' => $this->id]);
